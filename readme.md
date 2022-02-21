@@ -107,4 +107,5 @@
   * 将输出文件发给张老师，张老师检查回复ok后，再发至**跨境风险监控群**
   * 附：
     * 吕总，这是td-1的浮动成交收益表
-  ![win+r](https://gitee.com/oushisyx318/TF/raw/master/readme_files/12.png)
+
+![win+r](https://gitee.com/oushisyx318/TF/raw/master/readme_files/12.png)
