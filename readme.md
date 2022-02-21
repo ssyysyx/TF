@@ -31,7 +31,4 @@
 
 
 #### 3. 脚本执行方法
-
 * `win+r` 进入运行
-
-![image-20220221101033975](/Users/syxssyy/Library/Application Support/typora-user-images/image-20220221101033975.png)
