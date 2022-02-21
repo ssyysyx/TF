@@ -30,9 +30,12 @@
 
 
 #### 3. 脚本执行方法
-* `win+r` 进入运行
+* 键入`win`+`r` 进入运行
 ![win+r](https://gitee.com/oushisyx318/TF/raw/master/readme_files/1.png)
-* `cmd+enter`进入终端
+
+* 键入`cmd`+`enter` 进入终端
 ![win+r](https://gitee.com/oushisyx318/TF/raw/master/readme_files/2.png)
 
+* 键入`cd `+拖入execute.py所在的目录+`enter` 进入运行目录
+![win+r](https://gitee.com/oushisyx318/TF/raw/master/readme_files/3.png)
 
