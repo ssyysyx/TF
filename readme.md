@@ -109,3 +109,16 @@
     * 吕总，这是td-1的浮动成交收益表
 
 ![win+r](https://gitee.com/oushisyx318/TF/raw/master/readme_files/12.png)
+
+#### 6.不定时改动文件
+
+---
+
+* 定增投后管理的持仓sheet改动较多
+	* ![win+r](https://gitee.com/oushisyx318/TF/raw/master/readme_files/13.png)
+  	* 改动**定增投后管理sheet持仓**为下面的状态
+  	![win+r](https://gitee.com/oushisyx318/TF/raw/master/readme_files/14.png)
+
+	* ![win+r](https://gitee.com/oushisyx318/TF/raw/master/readme_files/15.png)
+		* 改动**定增投后管理sheet持仓**为下面的状态
+  	![win+r](https://gitee.com/oushisyx318/TF/raw/master/readme_files/16.png)
