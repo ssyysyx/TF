@@ -118,14 +118,23 @@
 	* ![win+r](https://gitee.com/oushisyx318/TF/raw/master/readme_files/13.png)
   	* 在**定增投后管理sheet持仓**新增行填写为下面的状态，其中股票数量申购金额发行日期非最终版
   	![win+r](https://gitee.com/oushisyx318/TF/raw/master/readme_files/14.png)
-  * ![win+r](https://gitee.com/oushisyx318/TF/raw/master/readme_files/15.png)
+  	
+	* ![win+r](https://gitee.com/oushisyx318/TF/raw/master/readme_files/15.png)
 		* 改动**定增投后管理sheet持仓**为下面的状态
-		![win+r](https://gitee.com/oushisyx318/TF/raw/master/readme_files/16.png)
+  	![win+r](https://gitee.com/oushisyx318/TF/raw/master/readme_files/16.png)
+  	
   * 不定期查wind：wind右下角输入ECM并回车，左下角搜定向增发，代码搜索股票存在空缺的，日期选近两个月，提取数据，改动**定增投后管理sheet持仓**，填上**发行**日期**上市**日期**解禁**日期，去掉发行日期单元格的填充颜色
-  ![win+r](https://gitee.com/oushisyx318/TF/raw/master/readme_files/17.png)
+    ![win+r](https://gitee.com/oushisyx318/TF/raw/master/readme_files/17.png)
+  
   * 依据【财通产品-君享天成】【国君互换-盯市日报】 【银河呼唤-收益互换：申购金额】改动**定增投后管理sheet持仓**，确定<u>股票数量、发行价格、申购金额、合约起始日</u>列
   	* 财通产品-君享天成
-  	![win+r](https://gitee.com/oushisyx318/TF/raw/master/readme_files/18.png)
-  	* 国君互换-盯市日报
-  	在策略收益B列如果有当日新增市值，说明盯市日报表新增了一行，
+		![win+r](https://gitee.com/oushisyx318/TF/raw/master/readme_files/18.png)
+		* 国君互换-盯市日报
+		在策略收益B列如果有当日新增市值，说明盯市日报表新增了一行
+		![win+r](https://gitee.com/oushisyx318/TF/raw/master/readme_files/19.png)
+		* 银河呼唤-收益互换
+		一般很少更新
+		
+---
 
+​		
