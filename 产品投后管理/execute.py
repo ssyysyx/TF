@@ -31,6 +31,7 @@ data_file = os.listdir(pwd+'/data')
 print("***************************************************************")
 print("Input File List:")
 print(pwd+"/data/君享丰硕")
+print(pwd+"/data/君享天成")
 print(pwd+"/data/衍复天禄1000指增")
 print(pwd+"/data/灵活对冲")
 print(pwd+"/data/凡二量化")
@@ -44,6 +45,9 @@ for f in data_file:
     if "君享丰硕" in f:
         print(pwd+'/data/'+f)
         df_jxfs = pd.read_excel(pwd+'/data/'+f,sheet_name=0,header=3)
+    if "君享天成" in f:
+        print(pwd+'/data/'+f)
+        df_jxtc = pd.read_excel(pwd+'/data/'+f,sheet_name=0,header=3)
     if "衍复天禄1000指增" in f:
         print(pwd+'/data/'+f)
         df_yftl_zz = pd.read_excel(pwd+'/data/'+f,sheet_name=0)
@@ -79,14 +83,14 @@ new_row = [x+DateDelta for x in last_row]
 # In[4]:
 
 
-# print(wb.sheets[15].name)
+# print(wb.sheets[2].name)
 
 
 # In[5]:
 
 
 # autofill下面一栏
-for i,k in zip([2,3,4,5,6,7,8,9,10,11,14,15],['X','Z','AB','AJ','AE','AC','X','AI','X','AC','AT','F']):
+for i,k in zip([2,3,4,5,6,7,8,9,10,11,12,15,16],['X','Z','AB','AB','AJ','AE','AC','X','AI','X','AC','AY','F']):
     cur_rng = 'A'+str(last_row[i])+':'+ k + str(last_row[i])
     exp_rng = 'A'+str(last_row[i])+':'+ k + str(new_row[i])
     #     print(cur_rng)
@@ -96,7 +100,7 @@ for i,k in zip([2,3,4,5,6,7,8,9,10,11,14,15],['X','Z','AB','AJ','AE','AC','X','A
 # 加上日期
 for d in range(1,DateDelta+1,1):
     
-    for i in [2,3,4,5,6,7,8,9,10,11,14,15]:
+    for i in [2,3,4,5,6,7,8,9,10,11,12,15,16]:
         lastdate = wb.sheets[i].range('A'+str(last_row[i])).value.date()
         #print(lastdate)
         filldate = lastdate + datetime.timedelta(days = d)
@@ -115,6 +119,14 @@ wb.sheets[4].range('B'+str(new_row[4])).value = jxdz_2
 wb.sheets[4].range('C'+str(new_row[4])).value = jxdz_3
 wb.sheets[4].range('D'+str(new_row[4])).value = jxdz_1
 
+# 处理君享天成
+jxtc_1 = df_jxtc.loc[df_jxtc['科目代码'] == '基金资产净值:','市值'].values[0]
+jxtc_2 = df_jxtc.loc[df_jxtc['科目代码'] == '基金单位净值：','市值'].values[0]
+jxtc_3 = df_jxtc.loc[df_jxtc['科目代码'] == '累计单位净值:','市值'].values[0]
+wb.sheets[5].range('D'+str(new_row[5])).value = jxtc_1
+wb.sheets[5].range('B'+str(new_row[5])).value = jxtc_2
+wb.sheets[5].range('C'+str(new_row[5])).value = jxtc_3
+
 # 处理衍复天禄1000指增
 yftl_zz_1 = df_yftl_zz['客户资产净值'].iloc[0]
 yftl_zz_2 = df_yftl_zz['客户资产份额'].iloc[0]
@@ -126,12 +138,12 @@ yftl_zz_6 = df_yftl_zz['虚拟后净值'].iloc[0]
 yftl_zz_3 = yftl_zz_3.replace(',','')
 yftl_zz_3 = float(yftl_zz_3)
 yftl_zz_3 = "="+str(yftl_zz_3)+"-$M$367"
-wb.sheets[5].range('E'+str(new_row[5])).value = yftl_zz_1
-wb.sheets[5].range('F'+str(new_row[5])).value = yftl_zz_2
-wb.sheets[5].range('M'+str(new_row[5])).formula = yftl_zz_3
-wb.sheets[5].range('B'+str(new_row[5])).value = yftl_zz_4
-wb.sheets[5].range('C'+str(new_row[5])).value = yftl_zz_5
-wb.sheets[5].range('D'+str(new_row[5])).value = yftl_zz_6
+wb.sheets[6].range('E'+str(new_row[6])).value = yftl_zz_1
+wb.sheets[6].range('F'+str(new_row[6])).value = yftl_zz_2
+wb.sheets[6].range('M'+str(new_row[6])).formula = yftl_zz_3
+wb.sheets[6].range('B'+str(new_row[6])).value = yftl_zz_4
+wb.sheets[6].range('C'+str(new_row[6])).value = yftl_zz_5
+wb.sheets[6].range('D'+str(new_row[6])).value = yftl_zz_6
 
 # 处理衍复-灵活对冲
 yf_lhdc_1 = df_yf_lhdc['单位净值'].iloc[0]
@@ -139,19 +151,19 @@ yf_lhdc_2 = df_yf_lhdc['累计单位净值'].iloc[0]
 yf_lhdc_3 = df_yf_lhdc['虚拟后净值'].iloc[0]
 yf_lhdc_4 = df_yf_lhdc['客户资产净值'].iloc[0]
 yf_lhdc_5 = df_yf_lhdc['虚拟计提金额'].iloc[0]
-wb.sheets[6].range('B'+str(new_row[6])).value = yf_lhdc_1
-wb.sheets[6].range('C'+str(new_row[6])).value = yf_lhdc_2
-wb.sheets[6].range('D'+str(new_row[6])).value = yf_lhdc_3
-wb.sheets[6].range('E'+str(new_row[6])).value = yf_lhdc_4
-wb.sheets[6].range('L'+str(new_row[6])).value = yf_lhdc_5
+wb.sheets[7].range('B'+str(new_row[7])).value = yf_lhdc_1
+wb.sheets[7].range('C'+str(new_row[7])).value = yf_lhdc_2
+wb.sheets[7].range('D'+str(new_row[7])).value = yf_lhdc_3
+wb.sheets[7].range('E'+str(new_row[7])).value = yf_lhdc_4
+wb.sheets[7].range('L'+str(new_row[7])).value = yf_lhdc_5
 
 # 处理凡二量化对冲7号
 felh_1 = df_felh['单位净值'].iloc[0]
 felh_2 = df_felh['累计单位净值'].iloc[0]
 felh_3 = df_felh['产品资产净值'].iloc[0]
-wb.sheets[7].range('B'+str(new_row[7])).value = felh_1
-wb.sheets[7].range('C'+str(new_row[7])).value = felh_2
-wb.sheets[7].range('D'+str(new_row[7])).value = felh_3
+wb.sheets[8].range('B'+str(new_row[8])).value = felh_1
+wb.sheets[8].range('C'+str(new_row[8])).value = felh_2
+wb.sheets[8].range('D'+str(new_row[8])).value = felh_3
 
 # 处理赫富尊享
 hfzx_1 = df_hfzx['单位净值'].iloc[0]
@@ -160,15 +172,19 @@ hfzx_3 = df_hfzx['虚拟后净值'].iloc[0]
 hfzx_4 = df_hfzx['客户资产净值'].iloc[0]
 hfzx_5 = df_hfzx['客户资产份额'].iloc[0]
 hfzx_6 = df_hfzx['虚拟计提金额'].iloc[0]
-wb.sheets[9].range('B'+str(new_row[9])).value = hfzx_1
-wb.sheets[9].range('C'+str(new_row[9])).value = hfzx_2
-wb.sheets[9].range('D'+str(new_row[9])).value = hfzx_3
-wb.sheets[9].range('E'+str(new_row[9])).value = hfzx_4
-wb.sheets[9].range('F'+str(new_row[9])).value = hfzx_5
-wb.sheets[9].range('M'+str(new_row[9])).value = hfzx_6
+wb.sheets[10].range('B'+str(new_row[10])).value = hfzx_1
+wb.sheets[10].range('C'+str(new_row[10])).value = hfzx_2
+wb.sheets[10].range('D'+str(new_row[10])).value = hfzx_3
+wb.sheets[10].range('E'+str(new_row[10])).value = hfzx_4
+wb.sheets[10].range('F'+str(new_row[10])).value = hfzx_5
+wb.sheets[10].range('M'+str(new_row[10])).value = hfzx_6
 
 # 处理产品净值图
-wb.sheets[13].range('B1').value = ReportDate
+wb.sheets[14].range('B1').value = ReportDate
+
+# 处理出入金
+for item in ['F','G','J','K','O','P','T','U','Y','Z','AD','AE','AI','AJ','AS','AT','AX','AY']:
+    wb.sheets[15].range(item+str(new_row[15])).value = None
 
 
 # In[7]:
@@ -190,4 +206,10 @@ print("***************************************************************")
 print("Output File:")
 print(output_filename)
 print("***************************************************************")
+
+
+# In[ ]:
+
+
+
 
