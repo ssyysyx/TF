@@ -97,7 +97,7 @@
     * 吕总，这是`td-1`的定增投后管理
     * 各位老师，这是`td-1`的定增投后管理
 * 产品投后管理
-  * 跑完进入输出文件的`sheet天行者`，查询天行者1号2号3号的单位净值 [天行者单位净值查询](https://www.mintrust.com/informationDisclosure/netWorthDisclosure) ，如果有更新，则填入并更新对应日期及之后的行；无更新，则不必更改。【此操作一般每周只需进行一遍】
+  * 跑完进入输出文件的`sheet天行者`，查询天行者1号2号3号的单位净值 [天行者单位净值查询](https://www.mintrust.com/informationDisclosure/netWorthDisclosure) [链接在sheet产品要素A8里有]，如果有更新，则填入并更新对应日期及之后的行；无更新，则不必更改。【此操作一般每周只需进行一遍】
   * 发送**输出文件**到**跨境风险监控群、敞口定增跨境产品群**
   * 附：
     * 吕总，这是td-1的产品投后管理
@@ -135,6 +135,13 @@
 		* 银河呼唤-收益互换
 		一般很少更新
 		
+#### 6.修改代码方法
+
 ---
 
-​		
+* 以更改`债券持仓情况集中度.ipynb`为例
+	* 终端cd到`xxxx.ipynb`所在的文件夹
+	* 输入`jupyter notebook`+`enter`弹出jupyter的网页
+	* 更改`xxxx.ipynb`的代码，调试并保存
+	* 另存为`xxxx.py`便于在终端快速执行
+	![win+r](https://gitee.com/oushisyx318/TF/raw/master/readme_files/20.png)
