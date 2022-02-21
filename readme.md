@@ -118,7 +118,9 @@
 	* ![win+r](https://gitee.com/oushisyx318/TF/raw/master/readme_files/13.png)
   	* 改动**定增投后管理sheet持仓**为下面的状态
   	![win+r](https://gitee.com/oushisyx318/TF/raw/master/readme_files/14.png)
-
-	* ![win+r](https://gitee.com/oushisyx318/TF/raw/master/readme_files/15.png)
+  * ![win+r](https://gitee.com/oushisyx318/TF/raw/master/readme_files/15.png)
 		* 改动**定增投后管理sheet持仓**为下面的状态
-  	![win+r](https://gitee.com/oushisyx318/TF/raw/master/readme_files/16.png)
+		![win+r](https://gitee.com/oushisyx318/TF/raw/master/readme_files/16.png)
+  * 不定期查wind：wind右下角输入ECM并回车，左下角搜定向增发，代码搜索股票存在空缺的，日期选近两个月，提取数据，**发行**日期**上市**日期**解禁**日期 
+  ![win+r](https://gitee.com/oushisyx318/TF/raw/master/readme_files/17.png)
+  * 财通-君享天成 国君互换-盯市 银河-收益互换：申购金额
