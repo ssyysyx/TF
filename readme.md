@@ -32,3 +32,7 @@
 #### 3. 脚本执行方法
 * `win+r` 进入运行
 ![win+r](https://gitee.com/oushisyx318/TF/raw/master/readme_files/1.png)
+* `cmd+enter`进入终端
+![win+r](https://gitee.com/oushisyx318/TF/raw/master/readme_files/2.png)
+
+
