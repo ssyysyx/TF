@@ -6,7 +6,7 @@
 
 * windows系统
 * Anaconda--安装时已勾选环境变量
-* wind金融终端--登录状态
+* wind金融终端--已修复python接口且在登录状态
 
 
 
@@ -39,3 +39,8 @@
 * 键入`cd `+拖入execute.py所在的目录+`enter` 进入运行目录
 ![win+r](https://gitee.com/oushisyx318/TF/raw/master/readme_files/3.png)
 
+* 键入`python execute.py`+`enter`开始执行脚本
+![win+r](https://gitee.com/oushisyx318/TF/raw/master/readme_files/4.png)
+![win+r](https://gitee.com/oushisyx318/TF/raw/master/readme_files/5.png)
+![win+r](https://gitee.com/oushisyx318/TF/raw/master/readme_files/6.png)
+![win+r](https://gitee.com/oushisyx318/TF/raw/master/readme_files/7.png)
