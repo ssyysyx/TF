@@ -1,12 +1,13 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[ ]:
+# In[1]:
 
 
 import os
 import xlwings as xw
 import datetime
+import pandas as pd
 import warnings
 warnings.filterwarnings('ignore') 
 from openpyxl import load_workbook
@@ -28,13 +29,15 @@ for f in data_file:
     if '定增投后管理' in f:
         print(pwd + '/data/' + f)
         path = pwd + '/data/' + f
-#         print(path)
+        df_dzth_cc = pd.read_excel(pwd+'/data/'+f,sheet_name=0)
+        df_dzth_cl = pd.read_excel(pwd+'/data/'+f,sheet_name=1,header=1)
+        df_dzth_jx = pd.read_excel(pwd+'/data/'+f,sheet_name=2,header=1)
 
 workbook_dzth = load_workbook(filename = path)
 wb = xw.Book(path)
 
 
-# In[ ]:
+# In[2]:
 
 
 import pandas as pd
@@ -46,7 +49,6 @@ for f in data_file:
         df_jxtc = pd.read_excel(pwd+'/data/'+f,sheet_name=0,header=3)
     if "盯市日报" in f:
         print(pwd + '/data/' + f)
-        # df_dsrb = pd.read_excel(pwd+'/data/'+f,sheet_name=0)
         workbook_ds = load_workbook(filename = pwd+'/data/'+f)
     if "收益互换日报表" in f:
         print(pwd + '/data/' + f)
@@ -54,7 +56,13 @@ for f in data_file:
         df_bdcc = pd.read_excel(pwd+'/data/'+f,sheet_name="标的持仓")
 
 
-# In[ ]:
+# In[3]:
+
+
+last_row_0 = wb.sheets[0].range('S'+str(wb.sheets[0].cells.last_cell.row)).end('up').row
+
+
+# In[4]:
 
 
 l = len(wb.sheets)
@@ -67,19 +75,45 @@ ReportDate = datetime.date(int(reportday[:4]),int(reportday[4:6]),int(reportday[
 DateDelta = (ReportDate-LastReportDate).days
 
 new_row = [x+DateDelta for x in last_row]
+new_row_0 = last_row_0 + DateDelta
 
 
-# In[ ]:
+# In[6]:
+
+
+# 存公式
+formula_1 = '=SUMIF(持仓!$A$2:$A$1048576,"国君互换",持仓!$F$2:$F$1048576)+SUMIF(持仓!$A$2:$A$1048576,"银河互换",持仓!$F$2:$F$1048576)'
+formula_2 = '=SUMIF(持仓!$A$2:$A$1048576,"国君互换",持仓!$F$2:$F$1048576)+SUMIF(持仓!$A$2:$A$1048576,"国君互换",持仓!$N$2:$N$1048576)+SUMIF(持仓!$A$2:$A$1048576,"银河互换",持仓!$F$2:$F$1048576)+SUMIF(持仓!$A$2:$A$1048576,"银河互换",持仓!$N$2:$N$1048576)'
+formula_3 = '=SUMIF(持仓!$A$2:$A$1048576,"财通产品",持仓!$F$2:$F$1048576)+SUMIF(持仓!$A$2:$A$1048576,"财通产品",持仓!$N$2:$N$1048576)'
+formula_4 = '=SUM($F$2:$F$1048576)+SUM($N$2:$N$1048576)'
+
+# 将单元格值化
+temp_1 = float(df_dzth_cl['标的当前市值'].iloc[-1])
+wb.sheets[1].range('D'+str(last_row[1])).value = temp_1
+temp_2 = float(df_dzth_cl['标的总期初市值'].iloc[-1])
+wb.sheets[1].range('C'+str(last_row[1])).value = temp_2
+temp_3 = float(df_dzth_jx['资产净值'].iloc[-1])
+wb.sheets[2].range('D'+str(last_row[2])).value = temp_3
+temp_4 = float(df_dzth_cc['申购金额+权益收益金额'].iloc[last_row_0-2])
+wb.sheets[0].range('T'+str(last_row_0)).value = temp_4
+
+
+# In[7]:
 
 
 # autofill下面一栏
-for i,k in zip([1,2,3],['L','G','E']):
+for i,k in zip([1,2,3],['L','G','F']):
     cur_rng = 'A'+str(last_row[i])+':'+ k + str(last_row[i])
     exp_rng = 'A'+str(last_row[i])+':'+ k + str(new_row[i])
     #     print(cur_rng)
     #     print(exp_rng)
     wb.sheets[i].range(cur_rng).api.AutoFill(wb.sheets[i].range(exp_rng).api,1)
 
+# autofill 持仓
+cur_rng = 'S'+str(last_row_0)+":U"+str(last_row_0)
+exp_rng = 'S'+str(last_row_0)+":U"+str(new_row_0)
+wb.sheets[0].range(cur_rng).api.AutoFill(wb.sheets[0].range(exp_rng).api,1)
+    
 # 加上日期
 for d in range(1,DateDelta+1,1):
     
@@ -90,23 +124,37 @@ for d in range(1,DateDelta+1,1):
         #print(filldate)
         wb.sheets[i].range('A'+str(last_row[i]+d)).value = filldate
         
+    # 第0个sheet
+    lastdate = wb.sheets[0].range('S'+str(last_row_0)).value.date()
+    filldate = lastdate + datetime.timedelta(days = d)
+    wb.sheets[0].range('S'+str(last_row_0+d)).value = filldate
+    
 # 新增重置
 wb.sheets[1].range('B'+str(new_row[1])).value = None
 
 
-# In[ ]:
+# In[8]:
+
+
+# 处理持仓
+wb.sheets[0].range('T'+str(new_row_0)).formula = formula_4
+
+
+# In[9]:
 
 
 # 处理君享天成
 jxtc_1 = df_jxtc.loc[df_jxtc['科目代码'] == '基金资产净值:','市值'].values[0]
 jxtc_2 = df_jxtc.loc[df_jxtc['科目代码'] == '基金单位净值：','市值'].values[0]
 jxtc_3 = df_jxtc.loc[df_jxtc['科目代码'] == '累计单位净值:','市值'].values[0]
-wb.sheets[2].range('D'+str(new_row[2])).value = jxtc_1
+
+# wb.sheets[2].range('D'+str(new_row[2])).value = jxtc_1
+wb.sheets[2].range('D'+str(new_row[2])).formula = formula_3
 wb.sheets[2].range('B'+str(new_row[2])).value = jxtc_2
 wb.sheets[2].range('C'+str(new_row[2])).value = jxtc_3
 
 
-# In[ ]:
+# In[10]:
 
 
 # 处理盯市日报
@@ -122,7 +170,7 @@ valueH1 = sheet_ds['Z'+str(record_row5)].value
 valueI = sheet_ds['AB'+str(record_row5)].value
 
 
-# In[ ]:
+# In[11]:
 
 
 # 获取盯市更新的日期commit_day 行数为record_row5-1
@@ -130,7 +178,7 @@ commitdate = sheet_ds['D'+str(record_row5-1)].value
 commit_day = datetime.datetime(int(commitdate[0:4]),int(commitdate[5:7]),int(commitdate[8:10]))
 
 
-# In[ ]:
+# In[12]:
 
 
 # 获取收益互换日报表数据 df_hygz df_bdcc
@@ -149,12 +197,14 @@ syhh_data_6 = df_bdcc.loc[df_bdcc['证券名称'] == '东兴证券','市值(计�
 valueD2 = syhh_para*syhh_data_4 + syhh_data_5 + syhh_data_6
 
 
-# In[ ]:
+# In[13]:
 
 
-# 填写D列和H列和I列
-val = '=' + str(valueD1) + '+' + str(valueD2)
-wb.sheets[1].range('D'+str(new_row[1])).value = val
+# 填写D列和H列和I列和C列
+# val = '=' + str(valueD1) + '+' + str(valueD2)
+# wb.sheets[1].range('D'+str(new_row[1])).value = val
+wb.sheets[1].range('D'+str(new_row[1])).formula = formula_2
+wb.sheets[1].range('C'+str(new_row[1])).formula = formula_1
 
 val = '=' + str(valueH1) + '+' + str(valueH2)
 wb.sheets[1].range('H'+str(new_row[1])).value = val
@@ -162,7 +212,7 @@ wb.sheets[1].range('H'+str(new_row[1])).value = val
 wb.sheets[1].range('I'+str(new_row[1])).value = valueI
 
 
-# In[ ]:
+# In[14]:
 
 
 # 填写补充的标的
@@ -179,7 +229,7 @@ if clsy_record_row_B:
     wb.sheets[1].range('B'+str(clsy_record_row_B)).value = val
 
 
-# In[ ]:
+# In[15]:
 
 
 reportplace = pwd+"/result/定增投后管理-"+ReportDate.strftime("%Y%m%d")+".xlsx"
@@ -189,4 +239,10 @@ print("Output File:")
 print(reportplace)
 print("***************************************************************")
 wb.close()
+
+
+# In[ ]:
+
+
+
 
