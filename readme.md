@@ -132,12 +132,16 @@
   * 依据【财通产品-君享天成】【国君互换-盯市日报】 【银河呼唤-收益互换：申购金额】改动**定增投后管理sheet持仓**，确定<u>股票数量、发行价格、申购金额、合约起始日</u>列
   	* 财通产品-君享天成
 		![win+r](https://gitee.com/oushisyx318/TF/raw/master/readme_files/18.png)
+		
 		* 国君互换-盯市日报
 		在策略收益B列如果有当日新增市值，说明盯市日报表新增了一行
 		![win+r](https://gitee.com/oushisyx318/TF/raw/master/readme_files/19.png)
+		
 		* 银河呼唤-收益互换
 		一般很少更新
 		
+  * 注意`sheet持仓`的F列和N列的后面行不要放多余的数据，否则导致其它数据SUM的计算有问题
+
 #### 7. 修改代码方法
 
 ---
